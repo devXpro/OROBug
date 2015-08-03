@@ -1,0 +1,15 @@
+oro:
+    bug:
+        issue:
+            code.label: 'Code'
+            summary.label: 'Summary'
+            type.label: 'Type'
+            priority.label: 'Priority'
+            status.label: 'Status'
+            resolution.label: 'Resolution'
+            reporter.label: 'Reporter'
+            assignee.label: 'Assignee'
+            created.label: 'Created'
+            updated.label: 'Updated'
+            entity_label: 'Issue'
+

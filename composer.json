@@ -15,7 +15,9 @@
         }
     ],
     "require": {
-        "oro/platform": "1.7.*"
+        "oro/platform": "1.7.*",
+        "doctrine/migrations": "1.0.x-dev",
+        "doctrine/doctrine-migrations-bundle": "1.0.*"
     },
     "config": {
         "component-dir": "web/bundles/components"

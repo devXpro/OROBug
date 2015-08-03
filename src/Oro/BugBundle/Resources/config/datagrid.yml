@@ -1,0 +1,65 @@
+datagrid:
+    issues-grid:
+        source:
+            acl_resource: bug.issue.issue_view
+            type: orm
+            query:
+                select:
+                    - i.code
+                    - i.summary
+                    - i.type
+                    - priority_entity.label as priority
+                    - status_entity.label as status
+                    - resolution_entity.label as resolution
+                    - reporter_entity.username as reporter
+                    - assignee_entity.username as assignee
+                    - i.created
+                    - i.updated
+                from:
+                    - { table: OroBugBundle:Issue, alias: i}
+                join:
+                    left:
+                        - { join: i.priority, alias: priority_entity}
+                        - { join: i.status, alias: status_entity}
+                        - { join: i.resolution, alias: resolution_entity}
+                        - { join: i.owner, alias: reporter_entity}
+                        - { join: i.assignee, alias: assignee_entity}
+        columns:
+            code:
+                label: oro.bug.issue.code.label
+            summary:
+                label: oro.bug.issue.summary.label
+            type:
+                label: oro.bug.issue.type.label
+            priority:
+                label: oro.bug.issue.priority.label
+            status:
+                label: oro.bug.issue.status.label
+            resolution:
+                label: oro.bug.issue.resolution.label
+            reporter:
+                label: oro.bug.issue.reporter.label
+            assignee:
+                label: oro.bug.issue.assignee.label
+            created:
+                label: oro.bug.issue.created.label
+                frontend_type: date
+            updated:
+                label: oro.bug.issue.updated.label
+                frontend_type: date
+        sorters:
+            columns:
+                code:
+                    data_name:
+                        i.code
+        filters:
+            columns:
+                reporter:
+                    type: string
+                    data_name: i.owner
+                updated:
+                    type: date
+                    data_name: i.updated
+                created:
+                    type: date
+                    data_name: i.created

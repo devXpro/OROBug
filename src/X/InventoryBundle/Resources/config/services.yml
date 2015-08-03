@@ -1,0 +1,16 @@
+parameters:
+#    inventory.example.class: X\InventoryBundle\Example
+
+services:
+    inventory.form.type.vehicle:
+        class: X\InventoryBundle\Form\Type\VehicleType
+        tags:
+            - { name: form.type, alias: inventory_vehicle }
+
+    inventory.vehicle_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - X\InventoryBundle\Entity\Vehicle
+            - "@doctrine.orm.entity_manager"
+

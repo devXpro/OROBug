@@ -1,0 +1,54 @@
+parameters:
+#    oro_bug.example.class: Oro\BugBundle\Example
+
+services:
+#    oro_bug.example:
+#        class: %oro_bug.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    bug.form.type.select.user:
+        class: BugBundle\Form\Type\UserSelectType
+        tags:
+            - { name: form.type, alias: bug_select_user }
+
+    bug.form.type.select.issueResolution:
+        class: Oro\BugBundle\Form\Type\IssueResolutionSelectType
+        tags:
+            - { name: form.type, alias: bug_select_issue_resolution }
+
+    bug.form.type.select.issuePriority:
+        class: Oro\BugBundle\Form\Type\IssuePrioritySelectType
+        tags:
+            - { name: form.type, alias: bug_select_issue_priority }
+
+    bug.form.type.select.issueStatus:
+        class: Oro\BugBundle\Form\Type\IssueStatusSelectType
+        tags:
+            - { name: form.type, alias: bug_select_issue_status }
+
+    bug.form.type.select.issue:
+        class: Oro\BugBundle\Form\Type\IssueSelectType
+        tags:
+            - { name: form.type, alias: bug_select_issue }
+
+    bug.form.type.set.parentIssue:
+        class: Oro\BugBundle\Form\Type\ParentIssueSetType
+        tags:
+            - { name: form.type, alias: bug_set_parent_issue}
+
+    bug.form.type.select.issueType:
+        class: Oro\BugBundle\Form\Type\IssueTypeSelectType
+        tags:
+            - { name: form.type, alias: bug_select_issue_type }
+
+    bug.form.type.issue:
+        class: Oro\BugBundle\Form\Type\IssueType
+        tags:
+            - { name: form.type, alias: bug_issue }
+        arguments: [@oro_security.security_facade]
+    bug.data.convererter:
+        class: Oro\BugBundle\Services\DataConverter
+
+
+
+
