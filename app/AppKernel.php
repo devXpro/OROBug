@@ -10,7 +10,6 @@ class AppKernel extends OroKernel
     {
         $bundles = array(
         // bundles,
-            new X\InventoryBundle\InventoryBundle(),
             new Oro\BugBundle\OroBugBundle(),
         );
 

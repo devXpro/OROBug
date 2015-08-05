@@ -2,19 +2,9 @@ oro_bug:
     resource: "@OroBugBundle/Controller"
     type: annotation
 
-inventory:
-    resource: "@InventoryBundle/Controller"
-    type: annotation
+oro_bug_yml:
+    resource: "@OroBugBundle/Resources/config/routing.yml"
 
-inventory_api_vehicle:
-    resource:     "@InventoryBundle/Controller/Api/Rest/VehicleController.php"
-    type:         rest
-    prefix:       api/rest/{version}/
-    requirements:
-        version:  latest|v1
-        _format:  json
-    defaults:
-        version:  latest
 
 nelmio_api_doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

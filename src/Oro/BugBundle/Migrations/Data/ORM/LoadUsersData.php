@@ -100,7 +100,7 @@ class LoadUsersData extends AbstractFixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $roles = [LoadRolesData::ROLE_USER, LoadRolesData::ROLE_ADMINISTRATOR, LoadRolesData::ROLE_ADMINISTRATOR];
-        $this->addUser($manager, LoadRolesData::ROLE_ADMINISTRATOR, self::ADMIN);
+//        $this->addUser($manager, LoadRolesData::ROLE_ADMINISTRATOR, self::ADMIN);
         $this->addUser($manager, LoadRolesData::ROLE_USER, self::USER);
         $this->addUser($manager, LoadRolesData::ROLE_MANAGER, self::MANAGER);
         for ($i = 0; $i < 10; $i++) {

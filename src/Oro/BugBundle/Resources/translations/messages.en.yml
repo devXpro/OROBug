@@ -1,10 +1,12 @@
 oro:
     bug:
         issue:
+            label: 'Issue'
             code.label: 'Code'
             summary.label: 'Summary'
             type.label: 'Type'
             priority.label: 'Priority'
+            description.label: 'Description'
             status.label: 'Status'
             resolution.label: 'Resolution'
             reporter.label: 'Reporter'
@@ -12,4 +14,11 @@ oro:
             created.label: 'Created'
             updated.label: 'Updated'
             entity_label: 'Issue'
-
+            children_issue_label: 'Children Issue'
+            type:
+                bug: 'Bug'
+                story: 'Story'
+                subtask: 'Subtask'
+                task: 'Task'
+        issues:
+            label: 'Issues'

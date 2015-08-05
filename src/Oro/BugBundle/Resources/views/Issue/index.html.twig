@@ -4,12 +4,12 @@
 {% set pageTitle = 'oro.bug.issue.entity_label'|trans %}
 
 {% block navButtons %}
-    {#{% if resource_granted('bug.issue.issue_view') %}#}
+    {% if resource_granted('bug.issue_view') %}
         <div class="btn-group">
             {{ UI.addButton({
-                'path': path('bug.issue_index'),
+                'path': path('bug.issue_create'),
                 'entity_label': 'oro.bug.issue.entity_label'|trans
             }) }}
         </div>
-    {#{% endif %}#}
+    {% endif %}
 {% endblock %}

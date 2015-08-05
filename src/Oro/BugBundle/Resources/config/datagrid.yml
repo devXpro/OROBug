@@ -1,13 +1,14 @@
 datagrid:
     issues-grid:
         source:
-            acl_resource: bug.issue.issue_view
+            acl_resource: bug.issue_view
             type: orm
             query:
                 select:
-                    - i.code
-                    - i.summary
-                    - i.type
+                    - i.id
+                    - i.code as code
+                    - i.summary as summary
+                    - type_entity.id as type
                     - priority_entity.label as priority
                     - status_entity.label as status
                     - resolution_entity.label as resolution
@@ -24,13 +25,17 @@ datagrid:
                         - { join: i.resolution, alias: resolution_entity}
                         - { join: i.owner, alias: reporter_entity}
                         - { join: i.assignee, alias: assignee_entity}
+                        - { join: i.type, alias: type_entity}
         columns:
             code:
                 label: oro.bug.issue.code.label
             summary:
                 label: oro.bug.issue.summary.label
             type:
+                type: twig
                 label: oro.bug.issue.type.label
+                frontend_type: html
+                template: OroBugBundle:Datagrid:issueType.html.twig
             priority:
                 label: oro.bug.issue.priority.label
             status:
@@ -47,6 +52,23 @@ datagrid:
             updated:
                 label: oro.bug.issue.updated.label
                 frontend_type: date
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: bug.issue_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: bug.issue_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: bug_api_delete_issue
+                params:
+                    - id
         sorters:
             columns:
                 code:
@@ -63,3 +85,23 @@ datagrid:
                 created:
                     type: date
                     data_name: i.created
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  bug.issue_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  bug.issue_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  bug.issue_delete

@@ -7,6 +7,7 @@ use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @SuppressWarnings(PHPMD.ElseExpression)
@@ -36,28 +37,13 @@ class IssueType extends AbstractType
         /** @var User $user */
 
         $builder
-            ->add('project', 'bug_select_project')
-            ->add('summary', 'text')
-            ->add('code', 'text')
-            ->add('description', 'textarea');
-        if ($options['parentIssue']) {
-            $builder->add('type', 'bug_select_issue_type_subtask');
-            $builder->add(
-                'parentIssue',
-                'bug_set_parent_issue',
-                array(
-                    'data' => $options['parentIssue'],
-                    'empty_data' => $options['parentIssue']->getId(),
-                )
-            );
-        } else {
-            $builder->add('type', 'bug_select_issue_type');
-        }
-        $builder->add('priority', 'bug_select_issue_priority')
+            ->add('summary', 'text', ['label' => 'oro.bug.issue.summary.label'])
+            ->add('description', 'textarea', ['label' => 'oro.bug.issue.description.label'])
+            ->add('type', 'bug_select_issue_type')
+            ->add('priority', 'bug_select_issue_priority')
             ->add('status', 'bug_select_issue_status')
             ->add('resolution', 'bug_select_issue_resolution')
-            ->add('assignee', 'bug_select_user')
-            ->add('reporter', 'bug_select_user', array('empty_data' => $this->user->getId()));
+            ->add('assignee', 'oro_user_select');
 
     }
 
@@ -72,25 +58,14 @@ class IssueType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             array(
-
                 'data_class' => 'Oro\BugBundle\Entity\Issue',
             )
         );
 
-        $resolver->setRequired('parentIssue');
-        $resolver->setAllowedValues(
-            'parentIssue',
-            function ($value) {
-                if ($value instanceof Issue || $value == null) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        );
+
     }
 }

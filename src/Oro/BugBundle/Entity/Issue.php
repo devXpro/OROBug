@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Oro\BugBundle\Model\ExtendIssue;
 use Oro\Bundle\DataAuditBundle\Metadata\Annotation\Loggable;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
+use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,17 +35,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * }
  * )
  */
+
 class Issue extends ExtendIssue
 {
     const TYPE_BUG = 'bug';
     const TYPE_SUBTASK = 'subtask';
     const TYPE_TASK = 'task';
     const TYPE_STORY = 'story';
-
-    const TYPE_BUG_ID = 1;
-    const TYPE_SUBTASK_ID = 2;
-    const TYPE_TASK_ID = 3;
-    const TYPE_STORY_ID = 4;
 
     /**
      * @var integer
@@ -79,13 +76,6 @@ class Issue extends ExtendIssue
      * @ORM\Column(name="description", type="string", length=10000)
      */
     private $description;
-
-
-    /**
-     * @var integer
-     * @ORM\Column(name="type", type="integer")
-     */
-    private $type;
 
     /**
      * @var IssuePriority
@@ -125,7 +115,7 @@ class Issue extends ExtendIssue
     /**
      * @var Collection | User[]
      * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User", inversedBy="issues")
-     * @ORM\JoinTable(name="collaborators")
+     * @ORM\JoinTable(name="oro_bug_collaborators")
      **/
     private $collaborators;
 
@@ -156,6 +146,14 @@ class Issue extends ExtendIssue
      * @ORM\Column(name="updated", type="datetime")
      */
     private $updated;
+
+    /**
+     * @var Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
+     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $organization;
 
     public function __construct()
     {
@@ -239,30 +237,6 @@ class Issue extends ExtendIssue
     {
         return $this->description;
     }
-
-    /**
-     * Set type
-     *
-     * @param integer $type
-     * @return Issue
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return integer
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
 
     /**
      * Set created
@@ -551,5 +525,40 @@ class Issue extends ExtendIssue
     public function getChildrenIssues()
     {
         return $this->childrenIssues;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return Issue
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param Organization $organization
+     * @return Issue
+     */
+    public function setOrganization(Organization $organization = null)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     * @return Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 }

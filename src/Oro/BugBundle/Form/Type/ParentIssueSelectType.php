@@ -3,26 +3,27 @@
 namespace Oro\BugBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ParentIssueSetType extends AbstractType
+class ParentIssueSelectType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return 'bug_set_parent_issue';
+        return 'bug_parent_issue_select';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             [
-                'class' => 'BugBundle\Entity\Issue'
+                'class' => 'Oro\BugBundle\Entity\Issue',
+                'label' => 'oro.bug.issue.label'
             ]
         );
     }

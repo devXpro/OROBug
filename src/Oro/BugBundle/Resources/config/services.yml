@@ -2,9 +2,12 @@ parameters:
 #    oro_bug.example.class: Oro\BugBundle\Example
 
 services:
-#    oro_bug.example:
-#        class: %oro_bug.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    bug.issue_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - Oro\BugBundle\Entity\Issue
+            - "@doctrine.orm.entity_manager"
 
     bug.form.type.select.user:
         class: BugBundle\Form\Type\UserSelectType
@@ -31,15 +34,22 @@ services:
         tags:
             - { name: form.type, alias: bug_select_issue }
 
-    bug.form.type.set.parentIssue:
-        class: Oro\BugBundle\Form\Type\ParentIssueSetType
-        tags:
-            - { name: form.type, alias: bug_set_parent_issue}
 
     bug.form.type.select.issueType:
         class: Oro\BugBundle\Form\Type\IssueTypeSelectType
+        arguments: [@translator]
         tags:
             - { name: form.type, alias: bug_select_issue_type }
+
+    bug.form.type.issue.children:
+        class: Oro\BugBundle\Form\Type\ChildrenIssueType
+        tags:
+            - { name: form.type, alias: bug_children_issue }
+
+    bug.form.type.issue.parent.select:
+        class: Oro\BugBundle\Form\Type\ParentIssueSelectType
+        tags:
+            - { name: form.type, alias: bug_parent_issue_select }
 
     bug.form.type.issue:
         class: Oro\BugBundle\Form\Type\IssueType

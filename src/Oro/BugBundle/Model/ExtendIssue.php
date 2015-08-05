@@ -2,11 +2,13 @@
 
 namespace Oro\BugBundle\Model;
 
+/**
+ * @method getType(object)
+ * @method setType(object)
+ */
 class ExtendIssue
 {
-    /**
-     * It is just house
-     */
+
     public function __construct()
     {
     }
