@@ -44,7 +44,6 @@ class IssueType extends AbstractType
             ->add('status', 'bug_select_issue_status')
             ->add('resolution', 'bug_select_issue_resolution')
             ->add('assignee', 'oro_user_select');
-
     }
 
     /**
@@ -61,9 +60,9 @@ class IssueType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Oro\BugBundle\Entity\Issue',
-            )
+            ]
         );
 
 

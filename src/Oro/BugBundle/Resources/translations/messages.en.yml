@@ -1,6 +1,7 @@
 oro:
     bug:
         issue:
+            owner.label: 'Reporter'
             label: 'Issue'
             code.label: 'Code'
             summary.label: 'Summary'
@@ -14,6 +15,7 @@ oro:
             created.label: 'Created'
             updated.label: 'Updated'
             entity_label: 'Issue'
+            entity_plural_label: 'Issues'
             children_issue_label: 'Children Issue'
             type:
                 bug: 'Bug'

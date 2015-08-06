@@ -7,7 +7,7 @@
     {% set formAction = path('bug.issue_create') %}
 {% endif %}
 
-{% if not form.vars.value.type %}
+{% if not form.vars.value.type and form.vars.value.id %}
     {% set formAction = path('bug.issue_children_create', { 'id': form.vars.value.parentIssue.id }) %}
 {% endif %}
 

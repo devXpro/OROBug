@@ -1,0 +1,36 @@
+definitions:
+    bug_issue_defenitition:
+        label: 'Add collaborators for issue'
+        enabled: true
+        entity: Oro\BugBundle\Entity\Issue
+        actions_configuration:
+            - @call_method:
+                object: $.data
+                method: addCollaborator
+                method_parameters: [$assignee]
+            - @call_method:
+                object: $.data
+                method: addCollaborator
+                method_parameters: [$owner]
+    bug_issue_note_defenitition:
+        label: 'Add note creator to collaborators'
+        enabled: true
+        entity: Oro\Bundle\NoteBundle\Entity\Note
+        actions_configuration:
+            - @call_method:
+                object: $target
+                method: addCollaborator
+                method_parameters: [$owner]
+            - @call_method:
+                object: $target
+                method: setUpdatedNow
+triggers:
+    bug_issue_defenitition:
+        -
+            event:  create
+        -
+            event:  update
+            field:  assignee
+    bug_issue_note_defenitition:
+        -
+            event: create

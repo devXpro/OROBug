@@ -45,9 +45,13 @@
             <div class="row-fluid form-horizontal">
                 <div class="responsive-block">
                     {{ UI.renderProperty('oro.bug.issue.summary.label'|trans, entity.summary) }}
-                    {{ UI.renderProperty('oro.bug.issue.type.label'|trans, entity.type) }}
+                    {{ UI.renderProperty('oro.bug.issue.type.label'|trans, entity.type|trans) }}
                     {{ UI.renderProperty('oro.bug.issue.resolution.label'|trans, entity.resolution) }}
                     {{ UI.renderProperty('oro.bug.issue.status.label'|trans, entity.status) }}
+                    {{ UI.renderProperty('oro.bug.issue.assignee.label'|trans, entity.assignee) }}
+                    {{ UI.renderProperty('oro.bug.issue.reporter.label'|trans, entity.owner) }}
+                    {{ UI.renderProperty('oro.bug.issue.created.label'|trans, entity.created|oro_format_datetime) }}
+                    {{ UI.renderProperty('oro.bug.issue.updated.label'|trans, entity.updated|oro_format_datetime) }}
                 </div>
             </div>
         </div>

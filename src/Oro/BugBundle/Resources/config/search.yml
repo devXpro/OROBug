@@ -1,0 +1,77 @@
+Oro\BugBundle\Entity\Issue:
+    alias: oro_bug_issue
+    label: oro.bug.issues.label
+    title_fields: [code, summary]
+    search_template: OroBugBundle:Search:result.html.twig
+    route:
+        name: bug.issue_view
+        parameters:
+            id: id
+    fields:
+        -
+            name: code
+            target_type: text
+        -
+            name: summary
+            target_type: text
+            target_fields: [summary, description]
+        -
+            name: type
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: name
+                    target_type: text
+                    target_fields: [name, all_data]
+                -
+                    name: id
+                    target_type: text
+                    target_fields: [type]
+        -
+            name: resolution
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: label
+                    target_type: text
+                    target_fields: [label, all_data]
+                -
+                    name: id
+                    target_type: integer
+                    target_fields: [resolution]
+        -
+            name: priority
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: label
+                    target_type: text
+                    target_fields: [label, all_data]
+                -
+                    name: id
+                    target_type: integer
+                    target_fields: [priority]
+        -
+            name: assignee
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: username
+                    target_type: text
+                    target_fields: [username, all_data]
+                -
+                    name: id
+                    target_type: integer
+                    target_fields: [assignee]
+        -
+            name: owner
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: username
+                    target_type: text
+                    target_fields: [username, all_data]
+                -
+                    name: id
+                    target_type: integer
+                    target_fields: [owner]

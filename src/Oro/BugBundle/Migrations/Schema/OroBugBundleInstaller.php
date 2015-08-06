@@ -7,23 +7,29 @@ use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
+use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
+use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyMethods)
  * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  */
-class OroBugBundleInstaller implements Installation, ExtendExtensionAwareInterface
+class OroBugBundleInstaller implements Installation, ExtendExtensionAwareInterface, NoteExtensionAwareInterface
 {
 
     /** @var ExtendExtension */
     protected $extendExtension;
+
+    /** @var NoteExtension */
+    protected $noteExtension;
+
 
     /**
      * {@inheritdoc}
      */
     public function getMigrationVersion()
     {
-        return 'v1_3';
+        return 'v1_4';
     }
 
     /**
@@ -37,6 +43,14 @@ class OroBugBundleInstaller implements Installation, ExtendExtensionAwareInterfa
     /**
      * {@inheritdoc}
      */
+    public function setNoteExtension(NoteExtension $noteExtension)
+    {
+        $this->noteExtension = $noteExtension;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema, QueryBag $queries)
     {
         /** Tables generation **/
@@ -45,10 +59,12 @@ class OroBugBundleInstaller implements Installation, ExtendExtensionAwareInterfa
         $this->createOroBugIssueResolutionTable($schema);
         $this->createOroBugIssueStatusTable($schema);
         $this->createOroBugIssuePriorityTable($schema);
+        $this->noteExtension->addNoteAssociation($schema, 'oro_bug_issue');
 
         /** Foreign keys generation **/
         $this->addOroBugIssueForeignKeys($schema);
         $this->addCollaboratorsForeignKeys($schema);
+
     }
 
     /**
