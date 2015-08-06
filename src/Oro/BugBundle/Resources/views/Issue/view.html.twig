@@ -1,5 +1,6 @@
 {% extends 'OroUIBundle:actions:view.html.twig' %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 {% block stats %}
 {% endblock %}
 {% block navButtons %}
@@ -44,6 +45,12 @@
         <div class="widget-content">
             <div class="row-fluid form-horizontal">
                 <div class="responsive-block">
+                    {% if  entity.type.id == 'subtask' %}
+                        <h4>{{ 'oro.bug.issue.parent.label'|trans }}:
+                            <a href="{{ path('bug.issue_view',{'id' : entity.parentIssue.id}) }}">{{ entity.parentIssue }}
+                            </a>
+                        </h4>
+                    {% endif %}
                     {{ UI.renderProperty('oro.bug.issue.summary.label'|trans, entity.summary) }}
                     {{ UI.renderProperty('oro.bug.issue.type.label'|trans, entity.type|trans) }}
                     {{ UI.renderProperty('oro.bug.issue.resolution.label'|trans, entity.resolution) }}
@@ -53,16 +60,22 @@
                     {{ UI.renderProperty('oro.bug.issue.created.label'|trans, entity.created|oro_format_datetime) }}
                     {{ UI.renderProperty('oro.bug.issue.updated.label'|trans, entity.updated|oro_format_datetime) }}
                 </div>
+                {% if  entity.type.id == 'story' %}
+                    <div class="responsive-block">
+                        <h4>{{ 'oro.bug.issue.subtasks'|trans }}</h4>
+                        {{ dataGrid.renderGrid('issue_subtask_grid', {'id': entity.id}) }}
+
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endset %}
-    {% set dataBlocks = [
+    {% set dataBlocks =
+    [
     {
-    'title': 'Data'|trans,
+    'title': 'oro.bug.issue.label'|trans,
     'class': 'active',
-    'subblocks': [
-    { 'data' : [data] }
-    ]
+    'subblocks': [{'data':[data]}]
     }
     ] %}
 

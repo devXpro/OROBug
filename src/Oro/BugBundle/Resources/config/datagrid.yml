@@ -105,3 +105,13 @@ datagrid:
                 link:          delete_link
                 icon:          trash
                 acl_resource:  bug.issue_delete
+    issue_subtask_grid:
+        extends: issues-grid
+        source:
+            query:
+                where:
+                    and:
+                        - i.parentIssue = :id
+            bind_parameters:
+                - id
+        filters:

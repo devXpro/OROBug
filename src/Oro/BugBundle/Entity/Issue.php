@@ -35,7 +35,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * }
  * )
  */
-
 class Issue extends ExtendIssue
 {
     const TYPE_BUG = 'bug';
@@ -167,7 +166,7 @@ class Issue extends ExtendIssue
      */
     public function __toString()
     {
-        return (string)$this->getCode();
+        return (string)$this->getCode().' '.(string)$this->getSummary();
     }
 
 
