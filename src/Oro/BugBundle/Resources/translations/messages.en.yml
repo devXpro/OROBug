@@ -19,6 +19,7 @@ oro:
             entity_label: 'Issue'
             entity_plural_label: 'Issues'
             children_issue_label: 'Children Issue'
+            chart: 'Issue Chart'
             type:
                 bug: 'Bug'
                 story: 'Story'

@@ -3,6 +3,7 @@
 namespace Oro\BugBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Oro\Bundle\UserBundle\Entity\User;
 
 /**
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
@@ -11,6 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class IssueRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function getIssuesByStatus()
+    {
+        return $this->createQueryBuilder('i')
+            ->select('COUNT(i.id) as issues, type.name as typeOfIssue')
+            ->innerJoin('i.type', 'type')
+            ->groupBy('type.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    //////
     public function getAllIssuesQuery()
     {
         return $this->getEntityManager()->createQuery("SELECT i FROM BugBundle:issue i");

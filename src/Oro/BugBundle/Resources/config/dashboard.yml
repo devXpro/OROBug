@@ -1,0 +1,6 @@
+oro_dashboard_config:
+    widgets:
+        oro_bug_chart:
+            label: oro.bug.issue.chart
+            route: oro_bug_chart_widget
+            description: oro.bug.issue.chart
