@@ -1,6 +1,7 @@
 oro:
     bug:
         issue:
+            by_user: '10 Issues by Users'
             parent.label: 'Parent Issue'
             subtasks: 'Subtasks'
             owner.label: 'Reporter'
