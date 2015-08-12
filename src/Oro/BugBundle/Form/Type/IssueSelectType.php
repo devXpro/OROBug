@@ -3,7 +3,6 @@
 namespace Oro\BugBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class IssueSelectType extends AbstractType

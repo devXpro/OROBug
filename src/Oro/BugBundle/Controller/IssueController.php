@@ -62,6 +62,8 @@ class IssueController extends Controller
         $issue = new Issue();
         $className = ExtendHelper::buildEnumValueClassName('oro_issue_type');
         $issue->setType($this->get('doctrine')->getManager()->getRepository($className)->find(Issue::TYPE_SUBTASK));
+        $type = $issue->getType();
+        $name = $type->getName();
         $issue->setParentIssue($parentIssue);
 
         return $this->update($issue, $parentIssue);
@@ -92,6 +94,7 @@ class IssueController extends Controller
      */
     private function update(Issue $issue, $parent = null)
     {
+        $saved = false;
         $request = $this->getRequest();
         $form = $parent ?
             $this->get('form.factory')->create('bug_children_issue', $issue, ['parentIssue' => $parent]) :
@@ -104,19 +107,24 @@ class IssueController extends Controller
             $entityManager->persist($issue);
             $entityManager->flush();
 
-            return $this->get('oro_ui.router')->redirectAfterSave(
-                [
-                    'route' => 'bug.issue_update',
-                    'parameters' => ['id' => $issue->getId()],
-                ],
-                ['route' => 'bug.issue_index'],
-                $issue
-            );
+            if (!$this->getRequest()->get('_widgetContainer')) {
+                return $this->get('oro_ui.router')->redirectAfterSave(
+                    [
+                        'route' => 'bug.issue_update',
+                        'parameters' => ['id' => $issue->getId()],
+                    ],
+                    ['route' => 'bug.issue_index'],
+                    $issue
+                );
+            }
+            $saved = true;
+
         }
 
         return [
             'entity' => $issue,
             'form' => $form->createView(),
+            'saved' => $saved,
         ];
     }
 

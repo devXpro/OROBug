@@ -1,0 +1,8 @@
+Oro\BugBundle\Entity\Issue:
+    properties:
+        summary:
+            - NotBlank: ~
+            - Length:
+                max: 1000
+        assignee:
+            - NotBlank: ~

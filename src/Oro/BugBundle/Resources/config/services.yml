@@ -55,9 +55,35 @@ services:
         class: Oro\BugBundle\Form\Type\IssueType
         tags:
             - { name: form.type, alias: bug_issue }
-        arguments: [@oro_security.security_facade]
+
+    bug.form.type.issue.api:
+        class: Oro\BugBundle\Form\Type\IssueApiType
+        tags:
+            - { name: form.type, alias: bug_issue_api }
+
+    bug.form.handler.issue:
+        class: Oro\BugBundle\Form\Handler\IssueHandler
+        scope: request
+        arguments:
+            - @bug.form.type.issue
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    bug.form.handler.issue.api:
+        class: Oro\BugBundle\Form\Handler\IssueHandler
+        scope: request
+        arguments:
+            - @bug.form.type.issue.api
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
     bug.data.convererter:
         class: Oro\BugBundle\Services\DataConverter
+
 
 
 

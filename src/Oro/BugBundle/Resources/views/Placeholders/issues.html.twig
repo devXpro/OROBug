@@ -1,4 +1,3 @@
-{% extends 'OroDashboardBundle:Dashboard:widget.html.twig' %}
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 {% block content %}
     {{ dataGrid.renderGrid('issue_issues_by_user',{user_id: app.user.id}) }}

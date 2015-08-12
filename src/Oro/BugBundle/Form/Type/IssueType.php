@@ -2,33 +2,17 @@
 
 namespace Oro\BugBundle\Form\Type;
 
-use Oro\Bundle\SecurityBundle\SecurityFacade;
 use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * @SuppressWarnings(PHPMD.ElseExpression)
  * Class IssueType
  * @package BugBundle\Form\Type
  */
 class IssueType extends AbstractType
 {
-
-    /** @var User */
-    private $user;
-
-    /**
-     * @param SecurityFacade $token
-     */
-    public function __construct(SecurityFacade $token)
-    {
-        /** @var User user */
-        $this->user = $token->getToken()->getUser();
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -40,10 +24,10 @@ class IssueType extends AbstractType
             ->add('summary', 'text', ['label' => 'oro.bug.issue.summary.label'])
             ->add('description', 'textarea', ['label' => 'oro.bug.issue.description.label'])
             ->add('type', 'bug_select_issue_type')
-            ->add('priority', 'bug_select_issue_priority')
+            ->add('priority', 'bug_select_issue_priority', ['required' => true])
             ->add('status', 'bug_select_issue_status')
             ->add('resolution', 'bug_select_issue_resolution')
-            ->add('assignee', 'oro_user_select');
+            ->add('assignee', 'oro_user_select', ['required' => true]);
     }
 
     /**
@@ -64,7 +48,5 @@ class IssueType extends AbstractType
                 'data_class' => 'Oro\BugBundle\Entity\Issue',
             ]
         );
-
-
     }
 }

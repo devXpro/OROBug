@@ -2,32 +2,17 @@
 
 namespace Oro\BugBundle\Form\Type;
 
-use Oro\Bundle\SecurityBundle\SecurityFacade;
 use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * @SuppressWarnings(PHPMD.ElseExpression)
  * Class IssueType
  * @package BugBundle\Form\Type
  */
 class ChildrenIssueType extends AbstractType
 {
-
-//    /** @var User */
-//    private $user;
-//
-//    /**
-//     * @param SecurityFacade $token
-//     */
-//    public function __construct(SecurityFacade $token)
-//    {
-//        /** @var User user */
-//        $this->user = $token->getToken()->getUser();
-//    }
 
     /**
      * {@inheritdoc}
@@ -45,7 +30,6 @@ class ChildrenIssueType extends AbstractType
                 'empty_data' => $options['parentIssue']->getId(),
             ]
         );
-
     }
 
     /**
@@ -69,18 +53,6 @@ class ChildrenIssueType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-
-
         $resolver->setRequired(['parentIssue']);
-//        $resolver->setAllowedValues(
-//            'parentIssue',
-//            function ($value) {
-//                if ($value instanceof Issue || $value == null) {
-//                    return true;
-//                } else {
-//                    return false;
-//                }
-//            }
-//        );
     }
 }

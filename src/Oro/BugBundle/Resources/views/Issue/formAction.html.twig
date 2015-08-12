@@ -1,0 +1,7 @@
+{% if form.vars.value.id %}
+    {% set formAction = path('bug.issue_update', { 'id': form.vars.value.id }) %}
+{% elseif form.vars.value.type.id is defined and form.vars.value.type.id == 'subtask' %}
+    {% set formAction = path('bug.issue_children_create', { 'id': form.vars.value.parentIssue.id }) %}
+{% else %}
+    {% set formAction = path('bug.issue_create') %}
+{% endif %}

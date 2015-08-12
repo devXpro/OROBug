@@ -1,6 +1,8 @@
 oro:
     bug:
         issue:
+            saved.success.label: 'Issue Saved success'
+            create.label: 'Create Issue'
             by_user: '10 Issues by Users'
             parent.label: 'Parent Issue'
             subtasks: 'Subtasks'

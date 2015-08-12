@@ -7,10 +7,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\BugBundle\Model\ExtendIssue;
 use Oro\Bundle\DataAuditBundle\Metadata\Annotation\Loggable;
+use Oro\Bundle\EmailBundle\Model\EmailHolderInterface;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyFields)
@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * }
  * )
  */
-class Issue extends ExtendIssue
+class Issue extends ExtendIssue implements EmailHolderInterface
 {
     const TYPE_BUG = 'bug';
     const TYPE_SUBTASK = 'subtask';
@@ -54,24 +54,18 @@ class Issue extends ExtendIssue
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(max=1000)
      * @ORM\Column(name="summary", type="string", length=1000)
      */
     private $summary;
 
     /**
      * @var string
-     * @Assert\Length(min=5)
-     * @Assert\Length(max=5)
      * @ORM\Column(name="code", type="string", length=5)
      */
     private $code;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(max=10000)
      * @ORM\Column(name="description", type="string", length=10000)
      */
     private $description;
@@ -169,6 +163,13 @@ class Issue extends ExtendIssue
         return (string)$this->getCode().' '.(string)$this->getSummary();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmail()
+    {
+        return $this->getOwner()->getEmail();
+    }
 
     /**
      * Get id
@@ -414,7 +415,7 @@ class Issue extends ExtendIssue
      * @param User $assignee
      * @return Issue
      */
-    public function setAssignee(User $assignee)
+    public function setAssignee(User $assignee = null)
     {
         $this->assignee = $assignee;
 

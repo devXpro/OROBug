@@ -2,17 +2,20 @@
 
 namespace Oro\BugBundle\Form\Type;
 
+use Oro\Bundle\SoapBundle\Form\EventListener\PatchSubscriber;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class IssuePrioritySelectType extends AbstractType
+class IssueApiType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return 'bug_select_issue_priority';
+        parent::buildForm($builder, $options);
+        $builder->addEventSubscriber(new PatchSubscriber());
     }
 
     /**
@@ -22,9 +25,7 @@ class IssuePrioritySelectType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'required' => true,
-                'class' => 'Oro\BugBundle\Entity\IssuePriority',
-                'label' => 'oro.bug.issue.priority.label',
+                'csrf_protection' => false,
             ]
         );
     }
@@ -32,8 +33,9 @@ class IssuePrioritySelectType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getName()
     {
-        return 'entity';
+        return 'bug_issue_api';
     }
+
 }

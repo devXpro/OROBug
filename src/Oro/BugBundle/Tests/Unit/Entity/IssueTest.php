@@ -7,6 +7,7 @@ use Oro\BugBundle\Entity\Issue;
 use Oro\BugBundle\Entity\IssuePriority;
 use Oro\BugBundle\Entity\IssueResolution;
 use Oro\BugBundle\Entity\IssueStatus;
+use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\UserBundle\Entity\User;
 
 class IssueTest extends AbstractEntityTestCase
@@ -31,7 +32,7 @@ class IssueTest extends AbstractEntityTestCase
         $summary = 'summary';
         $code = 'code';
         $description = 'description';
-        $type = 1;
+
         $priority = new IssuePriority();
         $status = new IssueStatus();
         $issueResolution = new IssueResolution();
@@ -47,12 +48,11 @@ class IssueTest extends AbstractEntityTestCase
             'summary' => ['summary', $summary, $summary],
             'code' => ['code', $code, $code],
             'description' => ['description', $description, $description],
-            'type' => ['type', $type, $type],
+//            'type' => ['type', $type, $type],
             'priority' => ['priority', $priority, $priority],
             'status' => ['status', $status, $status],
             'resolution' => ['resolution', $issueResolution, $issueResolution],
-            'reporter' => ['reporter', $reporter, $reporter],
-            'assignee' => ['assignee', $assignee, $assignee],
+            'owner' => ['owner', $reporter, $reporter],
             'assignee' => ['assignee', $assignee, $assignee],
             'collaborators' => ['collaborators', $collaborators, $collaborators],
             'parentIssue' => ['parentIssue', $parentIssue, $parentIssue],
