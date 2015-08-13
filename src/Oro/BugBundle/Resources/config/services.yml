@@ -81,9 +81,6 @@ services:
         tags:
             - { name: oro_tag.tag_manager }
 
-    bug.data.convererter:
-        class: Oro\BugBundle\Services\DataConverter
-
 
 
 

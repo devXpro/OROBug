@@ -4,12 +4,14 @@ namespace Oro\BugBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\BugBundle\Model\ExtendIssue;
 use Oro\Bundle\DataAuditBundle\Metadata\Annotation\Loggable;
 use Oro\Bundle\EmailBundle\Model\EmailHolderInterface;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
+use Oro\Bundle\SSOBundle\Security\Core\Exception\EmailDomainNotAllowedException;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
@@ -168,7 +170,11 @@ class Issue extends ExtendIssue implements EmailHolderInterface
      */
     public function getEmail()
     {
-        return $this->getOwner()->getEmail();
+        if ($this->getOwner() instanceof User) {
+            return $this->getOwner()->getEmail();
+        } else {
+            throw new EntityNotFoundException;
+        }
     }
 
     /**
@@ -435,18 +441,15 @@ class Issue extends ExtendIssue implements EmailHolderInterface
     /**
      * Add collaborators
      *
-     * @param User $collaborators
+     * @param User $collaborator
      * @return Issue
+     * @internal param User $collaborators
      */
-    public function addCollaborator(User $collaborators)
+    public function addCollaborator(User $collaborator)
     {
-        foreach ($this->collaborators as $col) {
-            if ($col == $collaborators) {
-                return $this;
-            }
+        if (!$this->collaborators->contains($collaborator)) {
+            $this->collaborators[] = $collaborator;
         }
-
-        $this->collaborators[] = $collaborators;
 
         return $this;
     }

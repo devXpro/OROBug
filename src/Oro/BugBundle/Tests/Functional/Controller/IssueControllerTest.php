@@ -91,10 +91,8 @@ class IssueControllerTest extends WebTestCase
     /**
      * @param Crawler $crawler
      */
-    private
-    function makeIssue(
-        Crawler $crawler
-    ) {
+    private function makeIssue(Crawler $crawler)
+    {
         /** @var Form $form */
 
         $form = $crawler->selectButton('Save and Close')->form();
@@ -102,7 +100,6 @@ class IssueControllerTest extends WebTestCase
         //Validation test
         $this->client->followRedirects(true);
         $crawler = $this->client->submit($form);
-        $x = $crawler->html();
         $this->checkValidation($crawler, ['bug_issue_description', 'bug_issue_assignee']);
 
         //Add missed fields
@@ -123,11 +120,8 @@ class IssueControllerTest extends WebTestCase
      * @param string $alias
      * @return Form
      */
-    private
-    function setFormData(
-        Form $form,
-        $alias = 'bug_issue'
-    ) {
+    private function setFormData(Form $form, $alias = 'bug_issue')
+    {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $this->user = $user = $em->getRepository('OroUserBundle:User')->findOneBy([]);
         $priority = $em->getRepository('OroBugBundle:IssuePriority')->findOneBy([]);
@@ -147,5 +141,4 @@ class IssueControllerTest extends WebTestCase
 
         return $form;
     }
-
 }

@@ -24,5 +24,11 @@ class IssuePriorityTest extends AbstractEntityTestCase
     {
         return ['label' => ['label', 'label', 'label']];
     }
-}
 
+    public function testLabel()
+    {
+        $this->entity->setLabel('label');
+        $this->assertEquals('label', $this->entity->getLabel());
+        $this->assertEquals('label', $this->entity->__toString());
+    }
+}

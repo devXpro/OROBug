@@ -22,7 +22,17 @@ class IssueStatusTest extends AbstractEntityTestCase
      */
     public function getSetDataProvider()
     {
-        return ['label' => ['label', 'label', 'label']];
+        return [
+            'label' => ['label', 'label', 'label'],
+            'open' => ['open', true, true],
+        ];
+    }
+
+    public function testLabel()
+    {
+        $this->entity->setLabel('label');
+        $this->assertEquals('label', $this->entity->getLabel());
+        $this->assertEquals('label', $this->entity->__toString());
     }
 }
 

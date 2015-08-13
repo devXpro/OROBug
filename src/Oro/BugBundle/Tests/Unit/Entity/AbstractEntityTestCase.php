@@ -47,4 +47,10 @@ abstract class AbstractEntityTestCase extends \PHPUnit_Framework_TestCase
      * @return string
      */
     abstract public function getEntityFQCN();
+
+    public function testId()
+    {
+        $this->assertNull($this->entity->getId());
+
+    }
 }
