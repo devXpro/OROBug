@@ -11,9 +11,9 @@ class SoapAccountTest extends WebTestCase
 {
     protected function setUp()
     {
+        self::markTestSkipped('Soap');
         $this->initClient([], $this->generateWsseAuthHeader());
         $this->initSoapClient();
-        self::markTestSkipped('Soap');
     }
 
     /**
