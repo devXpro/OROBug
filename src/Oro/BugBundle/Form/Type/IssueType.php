@@ -7,12 +7,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-/**
- * Class IssueType
- * @package BugBundle\Form\Type
- */
 class IssueType extends AbstractType
 {
+    /** @var  string */
+    private $dataClass;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setDataClass('Oro\BugBundle\Entity\Issue');
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -45,8 +51,24 @@ class IssueType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Oro\BugBundle\Entity\Issue',
+                'data_class' => $this->getDataClass(),
             ]
         );
+    }
+
+    /**
+     * @param mixed $dataClass
+     */
+    public function setDataClass($dataClass)
+    {
+        $this->dataClass = $dataClass;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDataClass()
+    {
+        return $this->dataClass;
     }
 }

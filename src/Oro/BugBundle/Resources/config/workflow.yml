@@ -1,0 +1,88 @@
+workflows:
+    bug_issue_workflow:
+        label: 'Issue Status'
+        entity: Oro\BugBundle\Entity\Issue
+        entity_attribute: issue
+        start_step: opened
+        steps_display_ordered: true
+
+        steps:
+            opened:
+                label: 'oro.bug.issue.status.open'
+                order: 1
+                allowed_transitions:
+                    - start_progress
+                    - resolve
+                    - close
+            in_progress:
+                label: 'oro.bug.issue.status.in_progress'
+                order: 2
+                allowed_transitions:
+                   - stop_progress
+                   - resolve
+                   - close
+            resolved:
+                label: 'oro.bug.issue.status.resolved'
+                order: 3
+                allowed_transitions:
+                   - reopen
+                   - close
+            closed:
+                label: 'oro.bug.issue.status.closed'
+                order: 4
+                allowed_transitions:
+                   - reopen
+
+
+        attributes:
+            issue_resolution_entity:
+                label: 'oro.bug.issue.resolution.label'
+                type: entity
+                options:
+                    class: Oro\BugBundle\Entity\IssueResolution
+
+        transitions:
+            start_progress:
+                label: 'oro.bug.issue.transitions.start_progress'
+                is_start: true
+                step_to: in_progress
+                transition_definition: start_definition
+            stop_progress:
+                label: 'oro.bug.issue.transitions.stop_progress'
+                step_to: opened
+                transition_definition: stop_definition
+            resolve:
+                label: 'oro.bug.issue.transitions.resolve'
+                step_to: resolved
+                transition_definition: resolve_definition
+                form_options:
+                    attribute_fields:
+                        issue_resolution_entity:
+                            form_type: entity
+                            options:
+                                class: Oro\BugBundle\Entity\IssueResolution
+                                property: label
+                                required: true
+            close:
+                label: 'oro.bug.issue.transitions.close'
+                step_to: closed
+                transition_definition: close_definition
+                form_options:
+                    attribute_fields:
+                        issue_resolution_entity:
+                            form_type: entity
+                            options:
+                                class: Oro\BugBundle\Entity\IssueResolution
+                                property: label
+                                required: true
+            reopen:
+                label: 'oro.bug.issue.transitions.reopen'
+                step_to: in_progress
+                transition_definition: reopen_definition
+
+        transition_definitions:
+            stop_definition: ~
+            start_definition: ~
+            resolve_definition: ~
+            close_definition: ~
+            reopen_definition: ~

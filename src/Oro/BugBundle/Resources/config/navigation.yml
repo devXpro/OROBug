@@ -1,0 +1,23 @@
+oro_menu_config:
+   items:
+       issues_options:
+           label: 'oro.bug.issue.label'
+           uri: '#'
+           extras:
+               position: 50
+
+       issue_list:
+           label: 'oro.bug.issue.list.label'
+           route: 'bug.issue_index'
+
+       issue_create:
+           label: 'oro.bug.issue.create.label'
+           route: 'bug.issue_create'
+
+   tree:
+       application_menu:
+           children:
+               issues_options:
+                   children:
+                       issue_list: ~
+                       issue_create: ~

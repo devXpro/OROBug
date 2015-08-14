@@ -1,6 +1,8 @@
 oro:
     bug:
         issue:
+            list.label: 'Show Issues'
+            collaborators.label: 'Collaborators'
             saved.success.label: 'Issue Saved success'
             create.label: 'Create Issue'
             by_user: '10 Issues by Users'
@@ -13,7 +15,6 @@ oro:
             type.label: 'Type'
             priority.label: 'Priority'
             description.label: 'Description'
-            status.label: 'Status'
             resolution.label: 'Resolution'
             reporter.label: 'Reporter'
             assignee.label: 'Assignee'
@@ -23,10 +24,26 @@ oro:
             entity_plural_label: 'Issues'
             children_issue_label: 'Children Issue'
             chart: 'Issue Chart'
+            status:
+                label: 'Status'
+                open: 'Open'
+                in_progress: 'In Progress'
+                resolved: 'Resolver'
+                closed: 'Closed'
             type:
                 bug: 'Bug'
                 story: 'Story'
                 subtask: 'Subtask'
                 task: 'Task'
+            transitions:
+                start_progress: 'Start Progress'
+                stop_progress: 'Stop Progress'
+                resolve: 'Resolve'
+                close: 'Close'
+                reopen: 'Reopen'
+
+
+
         issues:
+            show.all.label: 'Show all issues'
             label: 'Issues'

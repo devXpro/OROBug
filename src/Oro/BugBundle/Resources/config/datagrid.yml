@@ -48,10 +48,10 @@ datagrid:
                 label: oro.bug.issue.assignee.label
             created:
                 label: oro.bug.issue.created.label
-                frontend_type: date
+                frontend_type: datetime
             updated:
                 label: oro.bug.issue.updated.label
-                frontend_type: date
+                frontend_type: datetime
         properties:
             id: ~
             update_link:
@@ -71,14 +71,22 @@ datagrid:
                     - id
         sorters:
             columns:
-                code:
+                updated:
                     data_name:
-                        i.code
+                        i.updated
+                priority:
+                    data_name:
+                        priority_entity.weight
+            default:
+                updated: DESC
         filters:
             columns:
                 reporter:
                     type: string
                     data_name: i.owner
+                type:
+                    type: string
+                    data_name: i.type_entity.name
                 updated:
                     type: date
                     data_name: i.updated
@@ -132,3 +140,43 @@ datagrid:
                 pageSize:
                     items: [10]
                     default_per_page: 10
+
+    collaborators-grid:
+        source:
+            type: orm
+            acl_resource: bug.issue_view
+            query:
+                select:
+                    - collaborator_entity.id as id
+                    - CONCAT(collaborator_entity.username,CONCAT(':',CONCAT(collaborator_entity.firstName, CONCAT(' ', collaborator_entity.lastName)))) as collaborator
+                from:
+                    - { table: OroBugBundle:Issue, alias: i}
+                join:
+                    left:
+                        - { join: i.collaborators , alias: collaborator_entity }
+                where:
+                    and:
+                        - i.id = :issue_id
+            bind_parameters:
+                - issue_id
+        columns:
+            collaborator:
+                label:         oro.bug.issue.collaborators.label
+        sorters:
+            columns:
+                collaborator:
+                    data_name: collaborator
+        properties:
+            id: ~
+            view_link:
+                type:       url
+                route:      oro_user_view
+                params:     [ id ]
+        actions:
+            view:
+                type:          navigate
+                acl_resource:  bug.issue_view
+                label:         oro.grid.action.view
+                icon:          eye-open
+                link:          view_link
+                rowAction:     true

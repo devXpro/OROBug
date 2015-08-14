@@ -5,6 +5,7 @@ namespace Oro\BugBundle\Migrations\Data\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Oro\BugBundle\Entity\Issue;
+use Oro\BugBundle\Entity\IssuePriority;
 use Oro\BugBundle\Entity\IssueStatus;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 
@@ -18,14 +19,18 @@ class LoadDictionariesData extends AbstractFixture
 
         $persist = function (array $labels, $name, $add = false) use ($manager) {
             $name = 'Oro\BugBundle\Entity\\'.$name;
+            $counter = 5;
             foreach ($labels as $label) {
                 $entity = new $name();
+                if ($entity instanceof IssuePriority) {
+                    $entity->setWeight($counter);
+                    $counter--;
+                }
                 $entity->setLabel($label);
                 if ($add && in_array($label, [IssueStatus::OPEN, IssueStatus::REOPEN])) {
                     $entity->setOpen(true);
                 }
                 $manager->persist($entity);
-
             }
         };
 

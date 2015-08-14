@@ -11,7 +11,7 @@ use Oro\Bundle\DataAuditBundle\Metadata\Annotation\Loggable;
 use Oro\Bundle\EmailBundle\Model\EmailHolderInterface;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
-use Oro\Bundle\SSOBundle\Security\Core\Exception\EmailDomainNotAllowedException;
+use Oro\Bundle\TagBundle\Entity\Taggable;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
@@ -33,11 +33,14 @@ use Oro\Bundle\UserBundle\Entity\User;
  *          "security"={
  *              "type"="ACL",
  *              "group_name"=""
+ *          },
+ *          "workflow"={
+ *              "active_workflow"="bug_issue_workflow",
  *          }
  * }
  * )
  */
-class Issue extends ExtendIssue implements EmailHolderInterface
+class Issue extends ExtendIssue implements EmailHolderInterface, Taggable
 {
     const TYPE_BUG = 'bug';
     const TYPE_SUBTASK = 'subtask';
@@ -149,6 +152,10 @@ class Issue extends ExtendIssue implements EmailHolderInterface
      * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $organization;
+    /**
+     * @var ArrayCollection
+     */
+    private $tags;
 
     public function __construct()
     {
@@ -563,5 +570,31 @@ class Issue extends ExtendIssue implements EmailHolderInterface
     public function getOrganization()
     {
         return $this->organization;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTaggableId()
+    {
+        return $this->getId();
     }
 }

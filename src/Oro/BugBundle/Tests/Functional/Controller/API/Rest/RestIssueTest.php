@@ -9,6 +9,7 @@ class RestIssueTest extends WebTestCase
     protected function setUp()
     {
         $this->initClient([], $this->generateWsseAuthHeader());
+        self::markTestSkipped('Rest');
     }
 
     /**

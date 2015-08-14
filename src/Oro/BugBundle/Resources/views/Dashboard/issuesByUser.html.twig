@@ -2,4 +2,6 @@
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 {% block content %}
     {{ dataGrid.renderGrid('issue_issues_by_user',{user_id: app.user.id}) }}
+    <a href="{{ path('bug.issue_index') }}">{{ 'oro.bug.issues.show.all.label'|trans }}</a>
+
 {% endblock %}

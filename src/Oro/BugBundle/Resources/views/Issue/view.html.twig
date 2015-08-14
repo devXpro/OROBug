@@ -1,6 +1,7 @@
 {% extends 'OroUIBundle:actions:view.html.twig' %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 {% block stats %}
 {% endblock %}
 {% block navButtons %}
@@ -51,7 +52,9 @@
                             </a>
                         </h4>
                     {% endif %}
+                    {{ UI.renderProperty('Code'|trans, entity.code) }}
                     {{ UI.renderProperty('oro.bug.issue.summary.label'|trans, entity.summary) }}
+                    {{ UI.renderProperty('oro.bug.issue.priority.label'|trans, entity.priority) }}
                     {{ UI.renderProperty('oro.bug.issue.type.label'|trans, entity.type|trans) }}
                     {{ UI.renderProperty('oro.bug.issue.resolution.label'|trans, entity.resolution) }}
                     {{ UI.renderProperty('oro.bug.issue.status.label'|trans, entity.status) }}
@@ -70,12 +73,27 @@
             </div>
         </div>
     {% endset %}
+    {% set collaborators %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                {{ dataGrid.renderGrid('collaborators-grid', {'issue_id': entity.id}) }}
+            </div>
+        </div>
+    {% endset %}
+
+
     {% set dataBlocks =
     [
     {
     'title': 'oro.bug.issue.label'|trans,
     'class': 'active',
     'subblocks': [{'data':[data]}]
+    }
+    ,
+    {
+    'title': 'oro.bug.issue.collaborators.label'|trans,
+    'class': 'active',
+    'subblocks': [{'data':[collaborators]}]
     }
     ] %}
 

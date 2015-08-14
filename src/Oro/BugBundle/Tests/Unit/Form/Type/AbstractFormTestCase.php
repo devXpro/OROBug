@@ -39,7 +39,7 @@ abstract class AbstractFormTestCase extends TypeTestCase
     protected function checkSelectors($obj)
     {
         $this->assertTrue(method_exists($obj, 'getName'));
-        $this->assertTrue(method_exists($obj, 'configureOptions'));
+        $this->assertTrue(method_exists($obj, 'setDefaultOptions'));
         $this->assertTrue(method_exists($obj, 'getParent'));
         /** @var AbstractType $obj */
 

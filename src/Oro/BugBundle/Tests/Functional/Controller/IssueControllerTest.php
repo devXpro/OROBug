@@ -27,6 +27,7 @@ class IssueControllerTest extends WebTestCase
 
     public function testIndex()
     {
+        $this->client->followRedirects(true);
         $this->client->request('GET', $this->getUrl('bug.issue_index'));
         $result = $this->client->getResponse();
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
