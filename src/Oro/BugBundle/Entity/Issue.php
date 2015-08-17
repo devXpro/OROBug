@@ -10,6 +10,7 @@ use Oro\BugBundle\Model\ExtendIssue;
 use Oro\Bundle\DataAuditBundle\Metadata\Annotation\Loggable;
 use Oro\Bundle\EmailBundle\Model\EmailHolderInterface;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\TagBundle\Entity\Taggable;
 use Oro\Bundle\UserBundle\Entity\User;
@@ -35,7 +36,7 @@ use Oro\Bundle\UserBundle\Entity\User;
  *              "group_name"=""
  *          },
  *          "workflow"={
- *              "active_workflow"="bug_issue_workflow",
+ *              "active_workflow"="bug_issue_flow",
  *          }
  * }
  * )
@@ -53,6 +54,13 @@ class Issue extends ExtendIssue implements EmailHolderInterface, Taggable
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     private $id;
 
@@ -135,6 +143,13 @@ class Issue extends ExtendIssue implements EmailHolderInterface, Taggable
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     private $created;
 
@@ -142,6 +157,13 @@ class Issue extends ExtendIssue implements EmailHolderInterface, Taggable
      * @var \DateTime
      *
      * @ORM\Column(name="updated", type="datetime")
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     private $updated;
 

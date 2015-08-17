@@ -13,8 +13,6 @@ use Symfony\Component\Form\PreloadedExtension;
 
 class IssueTypeTest extends AbstractFormTestCase
 {
-
-
     /** @var  IssuePriority[] */
     private $priorities;
 
